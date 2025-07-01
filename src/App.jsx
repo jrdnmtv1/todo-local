@@ -14,7 +14,7 @@ function App() {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/tasks')
+    fetch('https://todo-backend-eeot.onrender.com/api/tasks')
       .then(res => res.json())
       .then(data => setTasks(data))
       .catch(err => console.error('Error al cargar tareas: ', err)

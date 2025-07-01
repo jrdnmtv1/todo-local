@@ -8,7 +8,7 @@ export default function TaskForm({ tasks, setTasks }) {
     e.preventDefault()
     if (!text.trim()) return 
 
-    const res = await fetch('http://localhost:4000/api/tasks', {
+    const res = await fetch('https://todo-backend-eeot.onrender.com/api/tasks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({text})

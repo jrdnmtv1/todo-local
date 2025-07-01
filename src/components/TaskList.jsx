@@ -9,7 +9,7 @@ export default function TaskList({ tasks, setTasks, filter }) {
   //   setTasks(tasks.filter((t) => t.id !== id));
   // };
   const deleteTask = async (id) => {
-    await fetch(`http://localhost:4000/api/tasks/${id}`, {
+    await fetch(`https://todo-backend-eeot.onrender.com/api/tasks/${id}`, {
       method: 'DELETE'
     })
     setTasks(tasks.filter(t => t._id !== id))
@@ -22,7 +22,7 @@ export default function TaskList({ tasks, setTasks, filter }) {
   //   setTasks(updated);
   // };
   const toggleComplete = async (task) => {
-    const res = await fetch(`http://localhost:4000/api/tasks/${task._id}`, {
+    const res = await fetch(`https://todo-backend-eeot.onrender.com/api/tasks/${task._id}`, {
       method: 'PUT',
       headers: { 'Content-Type':'application/json'},
       body: JSON.stringify({ completed: !task.completed })
@@ -51,7 +51,7 @@ export default function TaskList({ tasks, setTasks, filter }) {
   //   cancelEditing();
   // };
   const saveEdit = async (id) => {
-    const res = await fetch(`http://localhost:4000/api/tasks/${id}`, {
+    const res = await fetch(`https://todo-backend-eeot.onrender.com/api/tasks/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json'},
       body: JSON.stringify({text: editText})
