@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FiEdit, FiSave, FiX, FiTrash2 } from 'react-icons/fi';
 
 export default function TaskList({ tasks, setTasks, filter }) {
-  const [editingId, setEditingId] = useState(null);
+  const [editingId, setEditingId] = useState(null);  
   const [editText, setEditText] = useState("");
 
   // const deleteTask = (id) => {
