@@ -5,16 +5,21 @@ import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 
 function App() {
-  const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('tasks');
-    return saved ? JSON.parse(saved) : [];
-  });
+  // const [tasks, setTasks] = useState(() => {
+  //   const saved = localStorage.getItem('tasks');
+  //   return saved ? JSON.parse(saved) : [];
+  // });
+  const [tasks, setTasks] = useState([])
 
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+    fetch('http://localhost:4000/api/tasks')
+      .then(res => res.json())
+      .then(data => setTasks(data))
+      .catch(err => console.error('Error al cargar tareas: ', err)
+      )
+  }, [])
 
 
   return (
@@ -23,7 +28,7 @@ function App() {
         <h1 className="text-3xl font-extrabold text-center mb-6 text-blue-700 tracking-tight">📝 Mis Tareas</h1>
         <TaskForm setTasks={setTasks} tasks={tasks} />
         {/* Filtros */}
-        <div className="flex justify-center gap-3 mb-4">
+        <div className="w-full flex flex-col sm:flex-row justify-center gap-2 sm:gap-3 mb-4 px-2">
           <button onClick={() => setFilter('all')} className={`px-3 py-1 rounded cursor-pointer transition-colors ${filter === 'all' ? 'bg-blue-600 text-white' : 'bg-white border text-gray-700'}`}>Todas</button>          
           <button onClick={() => setFilter('completed')} className={`px-3 py-1 rounded cursor-pointer transition-colors ${filter === 'completed' ? 'bg-blue-600 text-white' : 'bg-white border text-gray-700'}`}>Completadas</button>          
           <button onClick={() => setFilter('pending')} className={`px-3 py-1 rounded cursor-pointer transition-colors ${filter === 'pending' ? 'bg-blue-600 text-white' : 'bg-white border text-gray-700' }`}>Pendientes</button>

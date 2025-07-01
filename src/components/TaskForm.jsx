@@ -1,21 +1,31 @@
+import { useState } from "react"
+
 export default function TaskForm({ tasks, setTasks }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const input = form.task;
-    const newTask = input.value.trim();
 
-    if (newTask === "") return;
+  const [text, setText] = useState('');
 
-    setTasks([...tasks, { id: Date.now(), text: newTask , completed: false}]);
-    form.reset();
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    if (!text.trim()) return 
+
+    const res = await fetch('http://localhost:4000/api/tasks', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({text})
+    })
+
+    const newTask = await res.json()
+    setTasks([...tasks, newTask])
+    setText('')
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
       <input
         type="text"
         name="task"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
         placeholder="Nueva tarea"
         className="flex-1 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ease-in-out"
       />
